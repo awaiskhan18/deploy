@@ -299,6 +299,24 @@ WantedBy=multi-user.target
 
 
 
+#### NLP #####
+
+python3 -m venv /opt/myapp/venv
+
+
+[Unit]
+Description=My Python App
+After=network.target
+
+[Service]
+Type=simple
+User=myappuser
+Group=myappuser
+WorkingDirectory=/opt/myapp
+ExecStart=/opt/myapp/venv/bin/python /opt/myapp/app.py
+
+[Install]
+WantedBy=multi-user.target
 
 
 
