@@ -173,6 +173,85 @@ SHOW DATABASES;
 dnf install php-mysqlnd php-pdo php-pdo_mysql -y
 mysql
 
+### Config files: ####
+
+wa.tga
+
+server {
+    listen 80;
+    server_name mujib.local;
+
+    root /var/www/html/mujib-v3; # Root directory of your Mujib full-stack Laravel application
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+    # Handling PHP files for Mujib application
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php-fpm/www.sock; # Adjust this if your PHP-FPM socket path is different
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+    }
+}
+
+
+
+
+
+
+
+### waapi.tga
+
+server {
+    listen 80;
+    server_name whatsapp.local;
+
+    root /var/www/html/whatsapp-v3/public; # Root directory of your Mujib full-stack Laravel application
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+    # Handling PHP files for Mujib application
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php-fpm/www.sock; # Adjust this if your PHP-FPM socket path is different
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+    }
+}
+
+
 
 
 
