@@ -277,6 +277,28 @@ listen 443 ssl http2;
 
 
 
+sudo nano /etc/systemd/system/laravel-websockets.service
+
+
+
+[Unit]
+Description=Laravel Websockets server
+After=network.target
+
+[Service]
+User=nginx
+Group=nginx
+Restart=always
+RestartSec=3
+WorkingDirectory=/var/www/html/mujib-v3
+ExecStart=/usr/bin/php /var/www/html/mujib-v3/artisan websockets:serve
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
 
 
 
