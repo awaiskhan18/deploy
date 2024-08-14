@@ -253,6 +253,16 @@ server {
 
 
 
+wget -O mujib.sql https://wakeb-my.sharepoint.com/:u:/g/personal/i_mansour_wakeb_tech/EWbY_bq0SEBHhx6YLuLTDPEBxVKrXLbjyTVYyjAsxdXqnQ?download=0
+
+mysql -u username -p mydatabase < /path/to/your/file.sql
+
+
+
+
+
+
+
 
 
 
