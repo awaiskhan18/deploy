@@ -320,10 +320,56 @@ WantedBy=multi-user.target
 
 
 
+sudo dnf groupinstall "Development Tools"
+sudo dnf install wget sqlite-devel mysql-devel openssl-devel bzip2-devel libffi-devel
+
+cd /usr/src
+sudo wget https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tgz
+sudo tar xzf Python-3.8.10.tgz
+cd Python-3.8.10
+sudo ./configure --enable-optimizations
+sudo make altinstall
+
+
+python3.8 --version
+python3 --version
+
+sudo alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.8 1
+
+sudo alternatives --config python3
+There are 2 programs which provide 'python3'.
+
+  Selection    Command
+-----------------------------------------------
+*+ 1           /usr/bin/python3.9
+   2           /usr/local/bin/python3.8
+
+Enter to keep the current selection[+], or type selection number: 2
+python3 --version
+
+pip3.8 --version
+sudo alternatives --install /usr/bin/pip3 pip3 /usr/local/bin/pip3.8 1
+sudo alternatives --config pip3
+
+python3 -m venv myenv
+source myenv/bin/activate
+sudo dnf install mysql-devel
+which mysql_config
+pip3 install -r requirements.txt
 
 
 
+pip install gdown
+gdown "https://drive.google.com/uc?id=1EL_MEok8vr2BaN0cr0DJlSU5SypCj7co"
 
-
+[Service]
+Type=simple
+WorkingDirectory=/var/www/html/nlp
+ExecStart=/var/www/html/nlp/myenv/bin/python3 /var/www/html/nlp/application.py
+Restart=always
+User=root
+Group=root
+Environment="PATH=/var/www/html/nlp/myenv/bin"
+Environment="PYTHONUNBUFFERED=1"
 
 
