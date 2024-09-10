@@ -446,3 +446,37 @@ server {
 
 
 
+==========================Awais=================================
+
+sudo dnf remove nginx
+
+sudo nano /etc/yum.repos.d/nginx.repo
+
+
+[nginx-stable]
+name=nginx stable repo
+baseurl=https://nginx.org/packages/rhel/9/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+
+[nginx-mainline]
+name=nginx mainline repo
+baseurl=https://nginx.org/packages/rhel/9/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=https://nginx.org/keys/nginx_signing.key
+
+
+sudo dnf install nginx
+
+
+sudo dnf upgrade nginx
+
+
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+nginx -v
+
+
