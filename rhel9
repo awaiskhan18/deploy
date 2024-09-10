@@ -373,3 +373,76 @@ Environment="PATH=/var/www/html/nlp/myenv/bin"
 Environment="PYTHONUNBUFFERED=1"
 
 
+
+
+---------------------
+Fixing PT Issues
+First and second points
+-----------------------
+
+
+server {
+    listen 80;
+    server_name mujib.local;
+
+    root /var/www/html/mujib-v3; # Keep root as the main Laravel project folder
+
+    index index.php index.html index.htm;
+
+    # Disable version disclosure
+    server_tokens off;
+
+    location / {
+        # Redirect everything to Laravel's public directory index.php
+        try_files $uri $uri/ /public/index.php?$query_string;
+        autoindex off;  # Disable directory listing
+    }
+
+    # Handling PHP files for Mujib application
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/php-fpm/www.sock; # Adjust this if your PHP-FPM socket path is different
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+        # Hide PHP version information
+        fastcgi_hide_header X-Powered-By;
+    }
+
+    # Deny access to hidden files like .env, .git, etc.
+    location ~ /\.(?!well-known).* {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Deny access to sensitive files such as web.config, env, and others
+    location ~ ^/(web\.config|config\.php|composer\.json|composer\.lock|env|readme\.md|artisan)$ {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Deny access to /config directory
+    location /config {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Block server-status or phpinfo pages (if present)
+    location ~ ^/(server-status|phpinfo)$ {
+        deny all;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+    }
+}
+
+
+
